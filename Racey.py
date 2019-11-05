@@ -1,5 +1,5 @@
 import pygame
-
+import time
 
 # pygame is an instance. .init func loads all the modules associated with pygame
 pygame.init()
@@ -25,8 +25,21 @@ clock = pygame.time.Clock()
 carImage = pygame.image.load("race-car.png")
 carImage = pygame.transform.scale(carImage, (70, 90))
 def car(x, y):
-	gameDisplay.blit(carImage, (x, y))
+	gameDisplay.blit(carImage, (x, y)) # blit() -- draws image to the screen.
 
+
+
+def crash():
+	messageDisplay('You Crashed')
+
+
+def messageDisplay(text):
+	font = pygame.font.Font('freesansbold.ttf', 115)
+	gameDisplay.blit(font.render(text, True, (0, 0, 0)), (0, 0))
+	pygame.display.update()
+	time.sleep(2)
+
+	game_loop()
 
 
 def game_loop():
@@ -40,7 +53,8 @@ def game_loop():
 		for event in pygame.event.get():
 			# event gets (for eg. where is the mouse they are pressing, pressing any key etc..
 			if event.type == pygame.QUIT:
-				gameExit = True
+				pygame.quit()
+				quit()
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_LEFT:
 					x_change = -5
@@ -57,7 +71,7 @@ def game_loop():
 
 		# check for boundary crash
 		if x > (display_width - car_width) or x < 0: # < 0 happens on the left and > width happens on the right of window
-			gameExit = True
+			crash()
 		pygame.display.update()
 		clock.tick(60)  # 60 frames/second
 
