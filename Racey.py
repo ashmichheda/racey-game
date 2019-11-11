@@ -1,5 +1,6 @@
 import pygame
 import time
+import random
 
 # pygame is an instance. .init func loads all the modules associated with pygame
 pygame.init()
@@ -24,6 +25,11 @@ clock = pygame.time.Clock()
 
 carImage = pygame.image.load("race-car.png")
 carImage = pygame.transform.scale(carImage, (70, 90))
+
+
+def things(thingx, thingy, thingw, thingh, color):
+	pygame.draw.rect(gameDisplay, color, [thingx, thingy, thingw, thingh])
+
 def car(x, y):
 	gameDisplay.blit(carImage, (x, y)) # blit() -- draws image to the screen.
 
@@ -47,6 +53,15 @@ def game_loop():
 	y = (display_height * 0.8)
 	x_change = 0
 
+
+	# object directions and properties
+	thing_startx = random.randrange(0, display_width)
+	thing_starty = -600
+	thing_speed = 7
+	thing_width = 100
+	thing_height = 100
+
+
 	gameExit = False
 	while not gameExit:
 
@@ -67,11 +82,27 @@ def game_loop():
 
 		x += x_change
 		gameDisplay.fill(white)
+
+
+		# things(thingx, thingy, thingw, thingh, color):
+		things(thing_startx, thing_starty, thing_width,  thing_height, black)
+		thing_starty += thing_speed
+
+
+
+
 		car(x, y)
 
 		# check for boundary crash
 		if x > (display_width - car_width) or x < 0: # < 0 happens on the left and > width happens on the right of window
 			crash()
+
+		# check for object went off the screen for repeating the next object
+		if thing_starty > display_height:
+			thing_starty = 0 - thing_height
+			# random between 0 to display_width range
+			thing_startx = random.randrange(0, display_width)
+
 		pygame.display.update()
 		clock.tick(60)  # 60 frames/second
 
