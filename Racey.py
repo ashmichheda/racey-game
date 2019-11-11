@@ -90,7 +90,6 @@ def game_loop():
 
 
 
-
 		car(x, y)
 
 		# check for boundary crash
@@ -102,6 +101,16 @@ def game_loop():
 			thing_starty = 0 - thing_height
 			# random between 0 to display_width range
 			thing_startx = random.randrange(0, display_width)
+
+
+		# Logic for car crash
+		if y < thing_starty+thing_height:
+			#print('Y Crossover!!')
+			# Logic for car crash
+			if x + car_width > thing_startx and x < thing_startx + thing_width:
+				crash()
+
+
 
 		pygame.display.update()
 		clock.tick(60)  # 60 frames/second
