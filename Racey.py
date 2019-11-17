@@ -12,8 +12,13 @@ display_height = 600
 black = (0, 0, 0)
 white = (255, 255, 255)
 
-red = (255, 0, 0)
+# Button colors
+red = (200, 0, 0)
 green = (0, 200, 0)
+
+bright_red = (255, 0, 0)
+bright_green = (0, 255, 0)
+
 
 block_color = (55, 120, 255)
 
@@ -65,9 +70,21 @@ def game_intro():
 		largeText = pygame.font.Font('freesansbold.ttf', 115)
 		gameDisplay.blit(largeText.render("A bit Racey", True, (0, 0, 0)), (100, 100))
 
+
+
+		mouse = pygame.mouse.get_pos()
+		#print(mouse)
+
+		if (150 + 100) > mouse[0] > 150 and 450+50 > mouse[1] > 450:
+			pygame.draw.rect(gameDisplay, bright_green, (150, 450, 100, 50))
+		else:
+			pygame.draw.rect(gameDisplay, green, (150, 450, 100, 50))
 		# Drawing buttons in the form of rectangles
-		pygame.draw.rect(gameDisplay, green, (150, 450, 100, 50))
+		#pygame.draw.rect(gameDisplay, green, (150, 450, 100, 50))
 		pygame.draw.rect(gameDisplay, red, (550, 450, 100, 50))
+
+
+
 		pygame.display.update()
 		clock.tick(15)
 
