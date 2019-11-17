@@ -50,6 +50,21 @@ def crash():
 	messageDisplay('You Crashed')
 
 
+
+def game_intro():
+	intro = True
+	while intro:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+				quit()
+		gameDisplay.fill(white)
+		largeText = pygame.font.Font('freesansbold.ttf', 115)
+		gameDisplay.blit(largeText.render("A bit Racey", True, (0, 0, 0)), (100, 100))
+		pygame.display.update()
+		clock.tick(15)
+
+
 def messageDisplay(text):
 	font = pygame.font.Font('freesansbold.ttf', 115)
 	gameDisplay.blit(font.render(text, True, (0, 0, 0)), (0, 0))
@@ -98,7 +113,7 @@ def game_loop():
 		x += x_change
 		gameDisplay.fill(white)
 
-		
+
 		# things(thingx, thingy, thingw, thingh, color):
 		things(thing_startx, thing_starty, thing_width,  thing_height, block_color)
 		thing_starty += thing_speed
@@ -136,6 +151,7 @@ def game_loop():
 		pygame.display.update()
 		clock.tick(60)  # 60 frames/second
 
+game_intro()
 game_loop()
 pygame.quit()
 quit()
