@@ -12,6 +12,8 @@ display_height = 600
 black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
+block_color = (55, 120, 255)
+
 car_width = 75
 
 gameDisplay = pygame.display.set_mode((display_width, display_height)) # 800 --> width, 600 --> height
@@ -27,8 +29,17 @@ carImage = pygame.image.load("race-car.png")
 carImage = pygame.transform.scale(carImage, (70, 90))
 
 
-def things(thingx, thingy, thingw, thingh, color):
-	pygame.draw.rect(gameDisplay, color, [thingx, thingy, thingw, thingh])
+# how many objects dodged
+def things_dodged(count):
+	font = pygame.font.SysFont(None, 25)
+	text = font.render("Dodged: "+str(count), True, black) # Puts it on the screen
+	gameDisplay.blit(text, (0, 0))
+
+
+
+def things(thingx, thingy, thingw, thingh, block_color):
+	pygame.draw.rect(gameDisplay, block_color, [thingx, thingy, thingw, thingh])
+
 
 def car(x, y):
 	gameDisplay.blit(carImage, (x, y)) # blit() -- draws image to the screen.
@@ -57,9 +68,13 @@ def game_loop():
 	# object directions and properties
 	thing_startx = random.randrange(0, display_width)
 	thing_starty = -600
-	thing_speed = 7
+	# Starting speed of the object
+	thing_speed = 4
 	thing_width = 100
 	thing_height = 100
+
+	dodged = 0
+	thing_count = 1
 
 
 	gameExit = False
@@ -83,14 +98,15 @@ def game_loop():
 		x += x_change
 		gameDisplay.fill(white)
 
-
+		temp = thing_count
 		# things(thingx, thingy, thingw, thingh, color):
-		things(thing_startx, thing_starty, thing_width,  thing_height, black)
+		things(thing_startx, thing_starty, thing_width,  thing_height, block_color)
 		thing_starty += thing_speed
 
 
 
 		car(x, y)
+		things_dodged(dodged)
 
 		# check for boundary crash
 		if x > (display_width - car_width) or x < 0: # < 0 happens on the left and > width happens on the right of window
@@ -101,6 +117,11 @@ def game_loop():
 			thing_starty = 0 - thing_height
 			# random between 0 to display_width range
 			thing_startx = random.randrange(0, display_width)
+			dodged += 1
+			thing_speed += 0.5
+
+			# Increasing width of object after every successful dodge, for difficulty
+			thing_width += (dodged * 1)
 
 
 		# Logic for car crash
