@@ -98,7 +98,7 @@ def game_loop():
 		x += x_change
 		gameDisplay.fill(white)
 
-		temp = thing_count
+		
 		# things(thingx, thingy, thingw, thingh, color):
 		things(thing_startx, thing_starty, thing_width,  thing_height, block_color)
 		thing_starty += thing_speed
