@@ -11,7 +11,10 @@ display_height = 600
 
 black = (0, 0, 0)
 white = (255, 255, 255)
+
 red = (255, 0, 0)
+green = (0, 200, 0)
+
 block_color = (55, 120, 255)
 
 car_width = 75
@@ -61,6 +64,10 @@ def game_intro():
 		gameDisplay.fill(white)
 		largeText = pygame.font.Font('freesansbold.ttf', 115)
 		gameDisplay.blit(largeText.render("A bit Racey", True, (0, 0, 0)), (100, 100))
+
+		# Drawing buttons in the form of rectangles
+		pygame.draw.rect(gameDisplay, green, (150, 450, 100, 50))
+		pygame.draw.rect(gameDisplay, red, (550, 450, 100, 50))
 		pygame.display.update()
 		clock.tick(15)
 
