@@ -1,3 +1,5 @@
+# A bit racey game developed using Pygame
+
 import pygame
 import time
 import random
