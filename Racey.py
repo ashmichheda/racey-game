@@ -57,6 +57,19 @@ def car(x, y):
 def crash():
 	messageDisplay('You Crashed')
 
+def button(msg, x, y, w, h, inactiveColor, activeColor):
+	mouse = pygame.mouse.get_pos()
+	# print(mouse)
+
+	if (x + w) > mouse[0] > x and y + h > mouse[1] > y:
+		pygame.draw.rect(gameDisplay, activeColor, (x, y, w, h))
+	else:
+		pygame.draw.rect(gameDisplay, inactiveColor, (x, y, w, h))
+
+	smallText = pygame.font.Font("freesansbold.ttf", 20)
+	textSurf, textRect = text_objects(msg, smallText)
+	textRect.center = ((x + (w / 2)), (y + (h / 2)))
+	gameDisplay.blit(textSurf, textRect)
 
 
 def game_intro():
@@ -71,26 +84,8 @@ def game_intro():
 		gameDisplay.blit(largeText.render("A bit Racey", True, (0, 0, 0)), (100, 100))
 
 
-
-		mouse = pygame.mouse.get_pos()
-		#print(mouse)
-
-		if (150 + 100) > mouse[0] > 150 and 450+50 > mouse[1] > 450:
-			pygame.draw.rect(gameDisplay, bright_green, (150, 450, 100, 50))
-		else:
-			pygame.draw.rect(gameDisplay, green, (150, 450, 100, 50))
-
-		smallText = pygame.font.Font("freesansbold.ttf", 20)
-		textSurf, textRect = text_objects("GO!", smallText)
-		textRect.center = ( (150 + (100/2)), (450 + (50/2)) )
-		gameDisplay.blit(textSurf, textRect)
-
-
-		# Drawing buttons in the form of rectangles
-		#pygame.draw.rect(gameDisplay, green, (150, 450, 100, 50))
-		pygame.draw.rect(gameDisplay, red, (550, 450, 100, 50))
-
-
+		button("GO!", 150, 450, 100, 50, green, bright_green)
+		button("Quit", 550, 450, 100, 50, red, bright_red)
 
 		pygame.display.update()
 		clock.tick(15)
