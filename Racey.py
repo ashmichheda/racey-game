@@ -13,8 +13,8 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 
 # Button colors
-red = (200, 0, 0)
-green = (0, 200, 0)
+red = (180, 0, 0)
+green = (0, 180, 0)
 
 bright_red = (255, 0, 0)
 bright_green = (0, 255, 0)
@@ -53,16 +53,25 @@ def car(x, y):
 	gameDisplay.blit(carImage, (x, y)) # blit() -- draws image to the screen.
 
 
+def quit_game():
+	pygame.quit()
+	quit()
 
 def crash():
 	messageDisplay('You Crashed')
 
-def button(msg, x, y, w, h, inactiveColor, activeColor):
+
+def button(msg, x, y, w, h, inactiveColor, activeColor, action=None):
 	mouse = pygame.mouse.get_pos()
+	click = pygame.mouse.get_pressed()
+	# print(click) # gets left, right and middle clicks (1, 0, 0) <--left, (0, 1, 0) <--middle, (0, 0, 1) <--right
 	# print(mouse)
 
 	if (x + w) > mouse[0] > x and y + h > mouse[1] > y:
 		pygame.draw.rect(gameDisplay, activeColor, (x, y, w, h))
+		if click[0] == 1 and action != None:
+			action()
+
 	else:
 		pygame.draw.rect(gameDisplay, inactiveColor, (x, y, w, h))
 
@@ -83,9 +92,9 @@ def game_intro():
 		largeText = pygame.font.Font('freesansbold.ttf', 115)
 		gameDisplay.blit(largeText.render("A bit Racey", True, (0, 0, 0)), (100, 100))
 
+		button("GO!", 150, 450, 100, 50, green, bright_green, game_loop)
+		button("Quit", 550, 450, 100, 50, red, bright_red, quit_game)
 
-		button("GO!", 150, 450, 100, 50, green, bright_green)
-		button("Quit", 550, 450, 100, 50, red, bright_red)
 
 		pygame.display.update()
 		clock.tick(15)
