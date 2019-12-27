@@ -79,6 +79,13 @@ def game_intro():
 			pygame.draw.rect(gameDisplay, bright_green, (150, 450, 100, 50))
 		else:
 			pygame.draw.rect(gameDisplay, green, (150, 450, 100, 50))
+
+		smallText = pygame.font.Font("freesansbold.ttf", 20)
+		textSurf, textRect = text_objects("GO!", smallText)
+		textRect.center = ( (150 + (100/2)), (450 + (50/2)) )
+		gameDisplay.blit(textSurf, textRect)
+
+
 		# Drawing buttons in the form of rectangles
 		#pygame.draw.rect(gameDisplay, green, (150, 450, 100, 50))
 		pygame.draw.rect(gameDisplay, red, (550, 450, 100, 50))
@@ -96,6 +103,11 @@ def messageDisplay(text):
 	time.sleep(2)
 
 	game_loop()
+
+
+def text_objects(text, font):
+	textSurface = font.render(text, True, black)
+	return textSurface, textSurface.get_rect()
 
 
 def game_loop():
