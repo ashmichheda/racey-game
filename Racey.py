@@ -9,6 +9,9 @@ pygame.init()
 display_width = 800
 display_height = 600
 
+
+pause = False
+
 black = (0, 0, 0)
 white = (255, 255, 255)
 
@@ -81,6 +84,35 @@ def button(msg, x, y, w, h, inactiveColor, activeColor, action=None):
 	gameDisplay.blit(textSurf, textRect)
 
 
+
+def unpause():
+
+	global pause
+	pause = False
+
+
+
+def paused():
+
+	while pause:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+				quit()
+		gameDisplay.fill(white)
+		largeText = pygame.font.Font('freesansbold.ttf', 115)
+		gameDisplay.blit(largeText.render("Paused", True, (0, 0, 0)), (100, 100))
+
+		button("Continue", 150, 450, 100, 50, green, bright_green, unpause)
+		button("Quit", 550, 450, 100, 50, red, bright_red, quit_game)
+
+
+		pygame.display.update()
+		clock.tick(15)
+
+
+
+
 def game_intro():
 	intro = True
 	while intro:
@@ -115,6 +147,8 @@ def text_objects(text, font):
 
 
 def game_loop():
+
+	global pause
 	x = (display_width * 0.45)
 	y = (display_height * 0.8)
 	x_change = 0
@@ -145,7 +179,9 @@ def game_loop():
 					x_change = -5
 				if event.key == pygame.K_RIGHT:
 					x_change = 5
-
+				if event.key == pygame.K_p:
+					pause = True
+					paused()
 			if event.type == pygame.KEYUP:
 				if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
 					x_change = 0
